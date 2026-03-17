@@ -155,7 +155,7 @@ export function SnakeBackground() {
         ctx.fill();
       });
 
-      // FOOD
+      
       ctx.shadowBlur = 15;
       ctx.shadowColor = "#d03732ff";
       ctx.fillStyle = "#d03732ff";
@@ -163,7 +163,7 @@ export function SnakeBackground() {
       ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 3, 0, Math.PI * 2);
       ctx.fill();
 
-      // SNAKE
+      
       ctx.shadowBlur = 10;
       ctx.shadowColor = "#b9eae4ff";
 
