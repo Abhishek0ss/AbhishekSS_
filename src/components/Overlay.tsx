@@ -51,33 +51,41 @@ export function Overlay({
 }: {
   scrollYProgress: MotionValue<number>;
 }) {
-  // Section 1: 0% to 25% (Frames 1-30)
-  const opacity1 = useTransform(scrollYProgress, [0, 0.15, 0.25, 0.26, 1], [1, 1, 0, 0, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.25], ["0px", "-40px"]);
+  // Section 1: 0% to 22% (Strict range, then absolute 0)
+  const opacity1 = useTransform(scrollYProgress, [0, 0.12, 0.20, 0.22, 1], [1, 1, 0, 0, 0]);
+  const y1 = useTransform(scrollYProgress, [0, 0.22], ["0px", "-40px"]);
 
-  // Section 2: 30% to 55% (Frames 36-66)
+  // Section 2: 25% to 55%
   const opacity2 = useTransform(
     scrollYProgress,
-    [0.26, 0.35, 0.50, 0.60, 1],
+    [0.22, 0.30, 0.50, 0.58, 1],
     [0, 1, 1, 0, 0]
   );
   const y2 = useTransform(
     scrollYProgress,
-    [0.26, 0.35, 0.50, 0.60],
+    [0.22, 0.30, 0.50, 0.58],
     ["30px", "0px", "0px", "-30px"]
   );
 
-  // Section 3: 60% to 85% (Frames 72-102)
+  // Section 3: 60% to 88%
   const opacity3 = useTransform(
     scrollYProgress,
-    [0.60, 0.68, 0.82, 0.90, 1],
+    [0.58, 0.65, 0.82, 0.90, 1],
     [0, 1, 1, 0, 0]
   );
   const y3 = useTransform(
     scrollYProgress,
-    [0.60, 0.68, 0.82, 0.90],
+    [0.58, 0.65, 0.82, 0.90],
     ["30px", "0px", "0px", "-30px"]
   );
+
+  // Force scroll to top on reload to sync animations
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-[100]">
