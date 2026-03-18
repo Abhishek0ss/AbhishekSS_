@@ -39,7 +39,7 @@ export function About() {
           
           <div className="space-y-8 relative">
             <p className="text-zinc-400 text-xl md:text-2xl leading-relaxed font-light">
-              AI-ML undergraduate with hands-on experience in machine learning, statistical analysis, and real-world problem solving. I've built projects like face recognition systems and genetic disorder prediction models, focusing on accuracy, optimization, and practical deployment.
+              AI-ML undergraduate with hands-on experience in machine learning, statistical analysis, and real-world problem solving. I&apos;ve built projects like face recognition systems and genetic disorder prediction models, focusing on accuracy, optimization, and practical deployment.
             </p>
             
             <p className="text-zinc-400 text-xl md:text-2xl leading-relaxed font-light">
@@ -47,7 +47,7 @@ export function About() {
             </p>
 
             <p className="text-zinc-400 text-xl md:text-2xl leading-relaxed font-light border-l-2 border-blue-500/30 pl-8 md:pl-12 mt-12 py-2 italic bg-blue-500/[0.02] rounded-r-2xl">
-              My ambition is to lead the development of next-generation AI infrastructure, designing scalable, data-driven systems that push the boundaries of what's possible.
+              My ambition is to lead the development of next-generation AI infrastructure, designing scalable, data-driven systems that push the boundaries of what&apos;s possible.
             </p>
           </div>
         </motion.div>
