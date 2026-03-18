@@ -51,54 +51,38 @@ export function Overlay({
 }: {
   scrollYProgress: MotionValue<number>;
 }) {
-  // Section 1: 0% to 22% (Strict range, then absolute 0)
-  const opacity1 = useTransform(scrollYProgress, [0, 0.12, 0.20, 0.22, 1], [1, 1, 0, 0, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.22], ["0px", "-40px"]);
+  const [hasMounted, setHasMounted] = useState(false);
 
-  // Section 2: 25% to 55%
-  const opacity2 = useTransform(
-    scrollYProgress,
-    [0.22, 0.30, 0.50, 0.58, 1],
-    [0, 1, 1, 0, 0]
-  );
-  const y2 = useTransform(
-    scrollYProgress,
-    [0.22, 0.30, 0.50, 0.58],
-    ["30px", "0px", "0px", "-30px"]
-  );
-
-  // Section 3: 60% to 88%
-  const opacity3 = useTransform(
-    scrollYProgress,
-    [0.58, 0.65, 0.82, 0.90, 1],
-    [0, 1, 1, 0, 0]
-  );
-  const y3 = useTransform(
-    scrollYProgress,
-    [0.58, 0.65, 0.82, 0.90],
-    ["30px", "0px", "0px", "-30px"]
-  );
-
-  // Force scroll to top on reload to sync animations
   useEffect(() => {
+    setHasMounted(true);
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
   }, []);
 
+  // Section 1: 0% to 22%
+  const opacity1 = useTransform(scrollYProgress, [0, 0.12, 0.20, 0.22, 1], [1, 1, 0, 0, 0]);
+  const y1 = useTransform(scrollYProgress, [0, 0.22, 1], [0, -40, -40]);
+
+  // Section 2: 25% to 55%
+  const opacity2 = useTransform(scrollYProgress, [0.22, 0.30, 0.50, 0.58, 1], [0, 1, 1, 0, 0]);
+  const y2 = useTransform(scrollYProgress, [0.22, 0.30, 0.50, 0.58, 1], [30, 0, 0, -30, -30]);
+
+  // Section 3: 60% to 88%
+  const opacity3 = useTransform(scrollYProgress, [0.58, 0.65, 0.82, 0.90, 1], [0, 1, 1, 0, 0]);
+  const y3 = useTransform(scrollYProgress, [0.58, 0.65, 0.82, 0.90, 1], [30, 0, 0, -30, -30]);
+
+  if (!hasMounted) return null;
+
   return (
-    <div className="absolute inset-0 pointer-events-none z-[100]">
-      <div className="relative w-full h-full">
+    <div className="fixed inset-0 pointer-events-none z-[100] w-full h-full overflow-hidden">
+      <div className="relative w-full h-full flex items-center justify-center">
         
         {/* Section 1 */}
         <motion.div
-          style={{ 
-            opacity: opacity1, 
-            y: y1,
-            pointerEvents: "none"
-          }}
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ opacity: opacity1, y: y1 }}
+          className="absolute w-full flex flex-col items-center justify-center text-center px-4"
         >
           <h1 className="text-5xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter drop-shadow-2xl">
             ABHISHEK S S
@@ -108,17 +92,13 @@ export function Overlay({
 
         {/* Section 2 */}
         <motion.div
-          style={{ 
-            opacity: opacity2, 
-            y: y2,
-            pointerEvents: "none"
-          }}
-          className="absolute inset-0 flex flex-col items-start justify-center px-8 md:px-24"
+          style={{ opacity: opacity2, y: y2 }}
+          className="absolute w-full flex flex-col items-start justify-center px-8 md:px-24 left-0"
         >
           <div className="max-w-xl text-left">
             <h2 className="text-4xl md:text-7xl font-bold text-white leading-[1.1] drop-shadow-2xl">
               I build <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 drop-shadow-none">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                 data-driven solutions.
               </span>
             </h2>
@@ -127,17 +107,13 @@ export function Overlay({
 
         {/* Section 3 */}
         <motion.div
-          style={{ 
-            opacity: opacity3, 
-            y: y3,
-            pointerEvents: "none"
-          }}
-          className="absolute inset-0 flex flex-col items-end justify-center px-8 md:px-24"
+          style={{ opacity: opacity3, y: y3 }}
+          className="absolute w-full flex flex-col items-end justify-center px-8 md:px-24 right-0"
         >
           <div className="max-w-xl text-right">
             <h2 className="text-4xl md:text-7xl font-bold text-white leading-[1.1] drop-shadow-2xl">
               Bridging ML <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-rose-500 to-amber-500 drop-shadow-none">
+              <span className="text-transparent bg-clip-text bg-gradient-to-l from-rose-500 to-amber-500">
                 and analytics.
               </span>
             </h2>
